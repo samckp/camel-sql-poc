@@ -40,10 +40,9 @@ public class JdbcRoute extends RouteBuilder {
                     public void process(Exchange xchg) throws Exception {
                         ObjectMapper obj = new ObjectMapper();
                         //the camel jdbc select query has been executed. We get the list of employees.
-                        ArrayList<Map<String, String>> dataList = (ArrayList<Map<String, String>>) xchg.getIn()
-                                .getBody();
+                        ArrayList<Map<String, String>> dataList =
+                                (ArrayList<Map<String, String>>) xchg.getIn().getBody();
                         List<Employee> employees = new ArrayList<Employee>();
-                        System.out.println("emps : " + dataList);
                         for (Map<String, String> data : dataList) {
                             Employee employee = new Employee();
                             employee.setEmpId(Integer.valueOf(data.get("ID")));
@@ -52,7 +51,7 @@ public class JdbcRoute extends RouteBuilder {
                             employee.setSalary(Long.valueOf(data.get("EMP_SALARY")));
                             employees.add(employee);
                         }
-                        xchg.getIn().setBody(obj.writeValueAsString(employees));
+                        xchg.getIn().setBody(obj.writeValueAsString(employees)); //convert into json string
 
                     }
                 })
